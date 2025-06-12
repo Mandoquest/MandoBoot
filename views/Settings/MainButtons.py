@@ -15,12 +15,12 @@ class MainButtons(View):
         label="Welcome Channel", style=discord.ButtonStyle.primary, emoji="1️⃣"
     )
     async def first_button_callback(
-        self, interaction: discord.Interaction, button: discord.ui.Button
+        self, interaction: discord.Interaction, button: discord.ui.Button, author_id
     ):
         if interaction.user.id != self.author_id:
             await interaction.response.send_message("Its not your Button!", ephemeral=True)
             return
-        await interaction.response.edit_message(embed=choose_Embeds("Welcome_channel"))
+        #await interaction.response.edit_message(embed=choose_Embeds("Welcome_channel"))
         await interaction.response.edit_message(view=choose_Views("Welcome_channel")())
 
 
