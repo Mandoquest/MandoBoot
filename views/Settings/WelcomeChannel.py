@@ -3,7 +3,7 @@ import discord
 from funktionen.choose_Embeds import choose_Embeds
 from funktionen.choose_Views import choose_Views
 from funktionen.check_admin import AuthorView
-from funktionen.welcome_channel_datenbank import set_welcome_channel
+from funktionen.welcome_message_Datenbank import set_welcome_channel
 
 class ChannelSelect(discord.ui.ChannelSelect):
     def __init__(self):
@@ -19,7 +19,7 @@ class ChannelSelect(discord.ui.ChannelSelect):
         guild_id = interaction.guild.id
         channel_id = selected_channel.id
         set_welcome_channel(guild_id, channel_id)
-        await interaction.response.send_message(f"Willkommenskanal gesetzt auf **{selected_channel.name}**. Lade das Menü neu um die Änderung zu sehen",ephemeral=True)
+        await interaction.response.send_message(f"Welcome channel set to **{selected_channel.name}**. Reload the menu to see the change.",ephemeral=True)
 
 
 class WelcomeChannel_View(AuthorView):
@@ -28,7 +28,7 @@ class WelcomeChannel_View(AuthorView):
         
         self.add_item(ChannelSelect()) 
 
-    @discord.ui.button(label="Zurück", style=discord.ButtonStyle.primary, emoji="◀️", row=1)
+    @discord.ui.button(label="Back", style=discord.ButtonStyle.primary, emoji="◀️", row=1)
     async def back_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         embed = await choose_Embeds("Main", guild=interaction.guild)
         view = choose_Views("Main", author_id=self.author_id)

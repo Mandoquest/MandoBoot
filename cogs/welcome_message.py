@@ -15,8 +15,7 @@ class WelcomeMessage(commands.Cog):
         guild = member.guild
         guild_id = guild.id
 
-        from funktionen.welcome_messages_datenbank import get_welcome_message
-        from funktionen.welcome_channel_datenbank import get_welcome_channel
+        from funktionen.welcome_message_Datenbank import get_welcome_message, get_welcome_channel
 
         msg = get_welcome_message(guild_id)
         if msg is None:
