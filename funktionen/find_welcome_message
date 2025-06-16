@@ -1,0 +1,15 @@
+import discord
+
+from funktionen.welcome_messages_datenbank import get_welcome_message
+
+
+async def find_welcome_message(guild_id, member):
+    message = get_welcome_message(guild_id)
+    if message:
+        message = message.replace("{member}", member.mention)    
+        message = message.replace("{server}", member.guild.name)
+        return message
+    else:
+        return f"Welcome to the Server {member.mention}! We are glad to see you here in our community!"
+    
+

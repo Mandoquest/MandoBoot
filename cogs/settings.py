@@ -5,6 +5,7 @@ import asyncio
 from funktionen.choose_Embeds import choose_Embeds
 from funktionen.choose_Views import choose_Views
 from views.Settings.MainButtons import MainButtons
+from embeds.Settings.WelcomeChannel import welcome_channel
 
 class Settings(commands.Cog):
     def __init__(self, client):
@@ -15,16 +16,24 @@ class Settings(commands.Cog):
         print("Settings cog is ready")
 
     @commands.command()
+    @commands.has_permissions(administrator=True)
     async def settings(self, ctx):
         if ctx.author.guild_permissions.administrator:
-            await ctx.send(embed=choose_Embeds("Main",), view=choose_Views("Main", author_id=ctx.author.id))
+            embed= await choose_Embeds("Main", guild=ctx.guild)
+            view = choose_Views("Main", author_id=ctx.author.id)
+            await ctx.send(embed=embed, view=view)
         else:
             message = await ctx.send("you dont have the permission, the message will be deleted in 5 seconds")
             await asyncio.sleep(5)
             await message.delete()
             await ctx.message.delete()
 
-
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def test(self, ctx):
+        embed = await welcome_channel(ctx.guild)
+        print("Test command executed", embed)
+        await ctx.send(embed=embed)
 
 async def setup(client):
     await client.add_cog(Settings(client))

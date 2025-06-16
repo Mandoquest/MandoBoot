@@ -2,7 +2,8 @@ import discord
 
 from funktionen.choose_Embeds import choose_Embeds
 from funktionen.choose_Views import choose_Views
-
+from funktionen.check_admin import AuthorView
+from funktionen.welcome_channel_datenbank import set_welcome_channel
 
 class ChannelSelect(discord.ui.ChannelSelect):
     def __init__(self):
@@ -15,21 +16,20 @@ class ChannelSelect(discord.ui.ChannelSelect):
 
     async def callback(self, interaction: discord.Interaction):
         selected_channel = self.values[0]
-        await interaction.response.send_message(
-            f"Willkommenskanal gesetzt auf **{selected_channel.name}**.",
-            ephemeral=True,
-        )
+        guild_id = interaction.guild.id
+        channel_id = selected_channel.id
+        set_welcome_channel(guild_id, channel_id)
+        await interaction.response.send_message(f"Willkommenskanal gesetzt auf **{selected_channel.name}**. Lade das Menü neu um die Änderung zu sehen",ephemeral=True)
 
 
-class WelcomeChannel_View(discord.ui.View):
+class WelcomeChannel_View(AuthorView):
     def __init__(self, author_id: int):
-        super().__init__(timeout=None)
-        self.author_id = author_id
+        super().__init__(timeout=None, author_id = author_id)
+        
         self.add_item(ChannelSelect()) 
 
     @discord.ui.button(label="Zurück", style=discord.ButtonStyle.primary, emoji="◀️", row=1)
     async def back_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if interaction.user.id != self.author_id:
-            await interaction.response.send_message("Nicht dein Button!", ephemeral=True)
-            return
-        await interaction.response.send_message("Zurück zum Hauptmenü.", ephemeral=True)
+        embed = await choose_Embeds("Main", guild=interaction.guild)
+        view = choose_Views("Main", author_id=self.author_id)
+        await interaction.response.edit_message(embed=embed, view=view)
