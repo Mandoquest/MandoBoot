@@ -28,12 +28,5 @@ class Settings(commands.Cog):
             await message.delete()
             await ctx.message.delete()
 
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def test(self, ctx):
-        embed = await welcome_channel(ctx.guild)
-        print("Test command executed", embed)
-        await ctx.send(embed=embed)
-
 async def setup(client):
     await client.add_cog(Settings(client))

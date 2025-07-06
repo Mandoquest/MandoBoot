@@ -1,6 +1,6 @@
 import discord
 
-from funktionen.welcome_messages_datenbank import get_welcome_message
+from funktionen.welcome_channel_datenbank import get_welcome_message
 
 
 async def find_welcome_message(guild_id, member):

@@ -15,7 +15,7 @@ class WelcomeMessage(commands.Cog):
         guild = member.guild
         guild_id = guild.id
 
-        from funktionen.welcome_message_Datenbank import get_welcome_message, get_welcome_channel
+        from funktionen.welcome_channel_datenbank import get_welcome_message, get_welcome_channel
 
         msg = get_welcome_message(guild_id)
         if msg is None:
@@ -42,7 +42,7 @@ class WelcomeMessage(commands.Cog):
     @commands.command()
     async def welcomemessage(self, ctx,*, message: str):
         if ctx.author.guild_permissions.administrator:
-            from funktionen.welcome_messages_datenbank import set_welcome_message, get_welcome_message
+            from funktionen.welcome_channel_datenbank import set_welcome_message, get_welcome_message
             set_welcome_message(ctx.guild.id, message)
             nachricht = get_welcome_message(ctx.guild.id)
             nachricht = nachricht.replace("{user}", ctx.author.mention)

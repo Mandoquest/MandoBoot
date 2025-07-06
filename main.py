@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 
 
 intents = discord.Intents.all()
-intents.message_content = True
 client = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
 

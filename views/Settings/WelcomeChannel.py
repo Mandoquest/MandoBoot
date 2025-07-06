@@ -3,7 +3,7 @@ import discord
 from funktionen.choose_Embeds import choose_Embeds
 from funktionen.choose_Views import choose_Views
 from funktionen.check_admin import AuthorView
-from funktionen.welcome_message_Datenbank import set_welcome_channel
+from funktionen.welcome_channel_datenbank import set_welcome_channel
 
 class ChannelSelect(discord.ui.ChannelSelect):
     def __init__(self):
